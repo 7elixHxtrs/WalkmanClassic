@@ -3,7 +3,7 @@ package com.walkman.classic
 import android.content.ContentUris
 import android.content.Context
 import android.net.Uri
-import android.provider.MediaStore
+import android.provider.MediaStore.Audio.Media as M
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 
@@ -21,7 +21,6 @@ fun fmt(ms: Long) = "%02d:%02d".format(ms / 60000, ms / 1000 % 60)
 
 fun loadSongs(ctx: Context): List<Song> {
     val out = mutableListOf<Song>()
-    val M = MediaStore.Audio.Media
     val proj = arrayOf(M._ID, M.TITLE, M.ARTIST, M.ALBUM, M.ALBUM_ID, M.DURATION)
     ctx.contentResolver.query(M.EXTERNAL_CONTENT_URI, proj,
         "${M.IS_MUSIC} != 0 AND ${M.DURATION} > 30000", null, "${M.TITLE} COLLATE NOCASE")?.use { c ->
@@ -35,3 +34,4 @@ fun loadSongs(ctx: Context): List<Song> {
     }
     return out
 }
+
